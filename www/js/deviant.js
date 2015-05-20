@@ -188,6 +188,15 @@ var splits = this.images[this.current].split(/\//);
 console.log( splits[splits.length - 1] );
 			this.fileSave( this.images[this.current], splits[splits.length - 1] );
 		}
+		else if( key.which == 78 )
+		{
+			this.nextImage();
+		}
+		// b key
+		else if( key.which == 66 )
+		{
+			this.previousImage();
+		}
 		else
 		{
 			console.log( "Unhandled keypress: ", key.which );
@@ -240,13 +249,26 @@ console.log( splits[splits.length - 1] );
 		 return dfr.promise();
 	},
 
+	nextImage: function()
+	{
+		$( "#content_item" ).attr( "src", this.images[++this.current] );
+	},
+
+	previousImage: function()
+	{
+		if( this.current > 0 )
+		{
+			$( "#content_item" ).attr( "src", this.images[--this.current] );
+		}
+	},
+
 	showImages: function()
 	{
 		if( this.current < this.images.length )
 		{
 			if( !this.pause )
 			{
-				$( "#content_item" ).attr( "src", this.images[++this.current] );
+				this.nextImage();
 				this.timer = setTimeout( function(){ DEVIANT.showImages(); }, this.pauseTime );
 			}
 		}
